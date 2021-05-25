@@ -3,13 +3,9 @@ var bodyParser = require('body-parser')
 var router = express.Router();
 var db=require('../database');
 
-router.use(
-  express.urlencoded({
-    extended: true
-  })
-)
+router.use(express.urlencoded({extended: true}));
 
-router.use(express.json())
+router.use(express.json());
 
 
 router.get('/form', function(req, res, next) { 
@@ -24,16 +20,29 @@ router.post('/create', function(req, res, next) {
   const email = req.body.email;
   const phone= req.body.phone;
   const id = req.body.id;
+  const password = req.body.password;
 
   var sql = 'INSERT INTO users (name,phone,email,id)'+' VALUES ('+'"'+name+'"'+','+phone+','+'"'+email+'"'+','+id+');';
   db.query(sql,function (err, data) { 
       if (err) throw err;
       	 else{
-      	 	console.log(data)
+      	 	console.log(data);
       	 	console.log("User data is inserted successfully ");
       	 }
           
   });
+
+  var sql2 = 'INSERT INTO login (id, password)'+' VALUES'+'('+id+','+'"'+password+'"'+');'
+  db.query(sql2,function(err,data){
+    if(err){
+      throw err;
+    }
+    else{
+      console.log(data);
+      console.log("User data enetered into login database");
+    }
+  });
+  res.send("User created in database");
 });
   
 module.exports = router;
