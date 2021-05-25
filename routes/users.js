@@ -28,9 +28,12 @@ router.post('/create', function(req, res, next) {
   var sql = 'INSERT INTO users (name,phone,email,id)'+' VALUES ('+'"'+name+'"'+','+phone+','+'"'+email+'"'+','+id+');';
   db.query(sql,function (err, data) { 
       if (err) throw err;
-         console.log("User data is inserted successfully "); 
+      	 else{
+      	 	console.log(data)
+      	 	console.log("User data is inserted successfully ");
+      	 }
+          
   });
- res.redirect('/users/form');  // redirect to user form page after inserting the data
 });
   
 module.exports = router;
