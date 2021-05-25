@@ -1,7 +1,8 @@
 var express = require('express');
-var bodyParser = require('body-parser')
+var bodyParser = require('body-parser');
 var router = express.Router();
 var db=require('../database');
+var db2=require('../login_database');
 
 router.use(express.urlencoded({extended: true}));
 
@@ -33,7 +34,7 @@ router.post('/create', function(req, res, next) {
   });
 
   var sql2 = 'INSERT INTO login (id, password)'+' VALUES'+'('+id+','+'"'+password+'"'+');'
-  db.query(sql2,function(err,data){
+  db2.query(sql2,function(err,data){
     if(err){
       throw err;
     }

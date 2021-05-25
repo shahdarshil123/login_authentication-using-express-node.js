@@ -3,7 +3,7 @@ var conn2 = mysql2.createConnection({
   host: 'localhost', // Replace with your host name
   user: 'darshil123',      // Replace with your database username
   password: 'DRS@123#',      // Replace with your database password
-  database: 'user' // // Replace with your database Name
+  database: 'users' // // Replace with your database Name
 }); 
 conn2.connect(function(err) {
   if (err){
