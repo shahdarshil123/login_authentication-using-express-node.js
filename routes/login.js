@@ -11,6 +11,13 @@ router.get('/form', function(req, res, next) {
 res.render('login.ejs'); 
 });
 
+router.use(function(err, req, res, next) {
+    res.status(err.status || 500);
+    res.send({
+        'message': err.message
+    });
+});
+
 router.post('/verify',(req,res)=>{
 	const id = req.body.id;
 	const password = req.body.password;
@@ -28,7 +35,8 @@ router.post('/verify',(req,res)=>{
 			}
 			else{
 				console.log("password not match");
-				res.send("Incorrect details! Check again");
+				res.send('Password wrong');
+
 			}
 			
 		}
