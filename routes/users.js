@@ -78,7 +78,7 @@ router.get('/form', function(req, res, next) {
 res.render('users.ejs'); 
 });
 
-router.post('/create',check,create,close,function(req,res){
+router.post('/create',check,create,function(req,res){
   res.writeHead(200,{'Content-type':'text/HTML'});
   res.write("<p>User created in database</p>");
   res.write('<button><a href="http://localhost:3000/login/form"> Login page </a></button>');
