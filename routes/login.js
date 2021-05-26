@@ -11,12 +11,6 @@ router.get('/form', function(req, res, next) {
 res.render('login.ejs'); 
 });
 
-router.use(function(err, req, res, next) {
-    res.status(err.status || 500);
-    res.send({
-        'message': err.message
-    });
-});
 
 router.post('/verify',(req,res)=>{
 	const id = req.body.id;
@@ -28,17 +22,21 @@ router.post('/verify',(req,res)=>{
 			console.log(err);
 		}
 		else{
-			console.log(data[0].password);
-			if(password === data[0].password){
+			console.log(data[0]);
+			if(typeof(data[0]) != "undefined"){
+				if(password === data[0].password){
 				console.log("password matched");
 				res.send("Login successful");
-			}
-			else{
+				}
+				else{
 				console.log("password not match");
 				res.send('Password wrong');
-
+				}
 			}
-			
+			else
+			{
+				res.send("Invalid roll no");
+			}		
 		}
 	});
 
