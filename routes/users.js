@@ -1,8 +1,7 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 var router = express.Router();
-var db=require('../database');
-var db2=require('../login_database');
+
 
 router.use(express.urlencoded({extended: true}));
 
@@ -14,8 +13,10 @@ res.render('users.ejs');
 });
 
 
-router.post('/create', function(req, res, next) {
-  
+router.post('/create', function(req, res, next) { 
+  var db=require('../database');
+  var db2=require('../login_database');
+
   // store all the user input data
   const name = req.body.name;
   const email = req.body.email;
@@ -30,7 +31,6 @@ router.post('/create', function(req, res, next) {
       	 	console.log(data);
       	 	console.log("User data is inserted successfully ");
       	 }
-          
   });
 
   var sql2 = 'INSERT INTO login (id, password)'+' VALUES'+'('+id+','+'"'+password+'"'+');'
@@ -43,6 +43,12 @@ router.post('/create', function(req, res, next) {
       console.log("User data enetered into login database");
     }
   });
+
+  db.end();
+  console.log("user database closed");
+  db2.end();
+  console.log("login database closed");
+  console.log("User created in databases");
   res.send("User created in database");
 });
   

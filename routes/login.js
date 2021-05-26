@@ -1,7 +1,7 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 var router = express.Router();
-var db2=require('../login_database');
+
 
 router.use(express.urlencoded({extended: true}));
 
@@ -13,6 +13,8 @@ res.render('login.ejs');
 
 
 router.post('/verify',(req,res)=>{
+	var db2=require('../login_database');
+	
 	const id = req.body.id;
 	const password = req.body.password;
 
