@@ -1,16 +1,14 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 var router = express.Router();
+var session = require('express-session');
 var db2=require('../login_database');
+var cookieParser = require('cookie-parser');
 
 router.use(express.urlencoded({extended: true}));
-
+router.use(cookieParser());
 router.use(express.json());
-
-router.get('/form', function(req, res, next){ 
-res.render('login.ejs'); 
-});
-
+router.use(session({secret: 'ssshhhhh',saveUninitialized: true,resave: true}));
 
 var check = function(req,res){
 	
@@ -32,13 +30,12 @@ var check = function(req,res){
 				db2.query(sql,function(err,data){
 					if(err) throw err;
 				});
-				res.writeHead(200, {'Content-Type': 'text/html'});
-				res.write("Login successful");
-				res.write("<p>Welcome to our system!<p>");
-				res.end();
+				res.cookie("id",data[0].id,{path :"/loggedin"});
+				return res.redirect('http://localhost:3000/loggedin/?id=${id}');
 				}
 				else{
 				console.log("password not match");
+				res.writeHead(200, {'Content-Type': 'text/html'});
 				res.write('Password wrong'); 
 				res.write('<button><a href="http://localhost:3000/login/form">Back to Login</a></button>');
 				res.end();
@@ -54,6 +51,10 @@ var check = function(req,res){
 		}
 	});
 }
+
+router.get('/form', function(req, res, next){ 
+	res.render('login.ejs'); 
+});
 
 router.post('/verify',check);
 

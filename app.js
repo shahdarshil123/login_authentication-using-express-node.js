@@ -10,4 +10,7 @@ app.use('/users', usersRouter);
 var loginRouter = require('C:/Users/darsh/Desktop/myapp/routes/login');
 app.use('/login',loginRouter);
 
+var loggedinRouter = require('C:/Users/darsh/Desktop/myapp/routes/loggedin');
+app.use('/loggedin',loggedinRouter);
+
 module.exports = app;
