@@ -2,6 +2,7 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var router = express.Router();
 var session = require('express-session');
+var db = require('../database');
 var db2=require('../login_database');
 var cookieParser = require('cookie-parser');
 
@@ -22,7 +23,6 @@ var check = function(req,res){
 			console.log(err);
 		}
 		else{
-			console.log(data[0]);
 			if(typeof(data[0]) != "undefined"){
 				if(password === data[0].password){
 				console.log("password matched");
@@ -30,21 +30,27 @@ var check = function(req,res){
 				db2.query(sql,function(err,data){
 					if(err) throw err;
 				});
-				res.cookie("id",data[0].id,{path :"/loggedin"});
-				return res.redirect('http://localhost:3000/loggedin/?id=${id}');
+				var sql3 = 'SELECT * FROM users WHERE id = '+data[0].id;
+				db.query(sql3,function(err, data){
+					if(err) throw err;
+					else{
+						res.cookie("user",data[0],{path :"/loggedin"});
+						res.redirect('http://localhost:3000/loggedin/');
+					}
+				});
 				}
 				else{
 				console.log("password not match");
 				res.writeHead(200, {'Content-Type': 'text/html'});
-				res.write('Password wrong'); 
-				res.write('<button><a href="http://localhost:3000/login/form">Back to Login</a></button>');
+				res.write('Password wrong<br>'); 
+				res.write('<p><button><a href="http://localhost:3000/login/form">Back to Login</a></button></p>');
 				res.end();
 				}
 			}
 			else
 			{
 				res.writeHead(200, {'Content-Type': 'text/html'});
-				res.write("<p>Invalid roll no </p>");
+				res.write("<p>Invalid roll no/ user isn't registerd. </p>");
 				res.write('<button><a href="http://localhost:3000/login/form">Back to Login</a></button>');
 				res.end();
 			}		

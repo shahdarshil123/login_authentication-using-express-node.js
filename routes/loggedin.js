@@ -10,16 +10,29 @@ router.use(express.json());
 router.use(cookieParser());
 router.use(session({secret: 'ssshhhhh',saveUninitialized: true,resave: true}));
 
+var id,name,phone,email;
+
+var checkout = function(req, res, next){
+	var sql = 'UPDATE login SET status="OUT" WHERE id='+id;
+	db2.query(sql,function(err,data){
+		if(err) throw err;
+	});
+	console.log(name+" logged out of the system");
+	next();
+}
 
 
 router.get("/",function(req,res){
-	var id = req.cookies.id;
-	console.log(id);
-	res.render("loggedin.ejs");
+	id = req.cookies.user.id;
+	name = req.cookies.user.name;
+ 	phone = req.cookies.user.phone;
+	email = req.cookies.user.email;
+	console.log(name+" logged into system");
+	res.render("loggedin.ejs",{'name':name});
 });
 
-router.get("/logout",function(req,res){
-	res.clearCookie('id', { path: '/loggedin' });
+router.post("/logout",checkout,function(req,res){
+	res.clearCookie('user', { path: '/loggedin' });
     res.redirect('http://localhost:3000/login/form');
 });
 
