@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+<!--====form section start====-->
+<div class="login-details">
+    <h2>Login</h2>
+    <form action="/login/verify" method="POST">
+          <p><label>Roll No</label>
+          <input type="number" placeholder="Enter Roll No" name="id" required id="numb"><br><p>
+          <p id="demo"></p>
+          <p><label>Password</label>
+          <input type="password" placeholder="Enter password" name="password" required/><br><p>
+          <p><button type="submit">Submit</button><p>
+     </form>
+</div>
+<div>
+  <p>Register if new user</p>
+  <button><a href="http://localhost:3000/users/form"> Register</a></button>
+</div>
+
+
+</body>
+</html>

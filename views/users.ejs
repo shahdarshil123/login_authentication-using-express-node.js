@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+<!--====form section start====-->
+<div class="user-detail">
+    <h2>Create User Data</h2>
+    <form action="/users/create" method="POST">
+         <p> <label>Full Name: </label>
+          <input type="text" placeholder="Enter Full Name" name="name" required><br><p>
+          <p><label>Email Address: </label>
+          <input type="email" placeholder="Enter Email Address" name="email" required><br></p>
+          <p><label>Phone: </label>
+          <input type="number" placeholder="Enter Phone number" name="phone" required><br></p>
+          <p><label>Roll No: </label>
+          <input type="number" placeholder="Enter Roll No" name="id" required><br></p>
+          <p><label>Password: </label>
+          <input type="password" placeholder="Enter password" name="password" required><br><p>
+          <p><button type="submit">Submit</button></p>
+        </div>
+</div>
+<div>
+  <p>Back to login page</p>
+    <p><button><a href="http://localhost:3000/login/form">Login</a></button></p>
+</div>
+</body>
+</html>
